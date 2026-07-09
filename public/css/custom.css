@@ -1,0 +1,377 @@
+/* ============================================================
+   KickMaster Custom CSS — "Pitch & Scoreboard" design system
+   ============================================================
+   Color tokens:
+     --pitch-dark:     #0B3D2E   (deep turf green, navbar/sidebar base)
+     --pitch:          #1F7A4D   (turf green, primary accent)
+     --pitch-light:     #2FA968  (hover/active green)
+     --scoreboard:      #FFB627  (amber, live scores + highlights)
+     --chalk:            #F7FAF7  (off-white, page background)
+     --ink:               #0A1F1C  (near-black text)
+   Type tokens:
+     Display/scoreboard: 'Oswald' (condensed, uppercase, used sparingly)
+     Body: 'Inter'
+     Data/numbers: 'Roboto Mono' (scores, jersey numbers, stats)
+   Signature element: match cards styled like a stadium scoreboard,
+   plus a subtle mown-turf stripe texture behind hero/stat sections.
+============================================================ */
+
+:root {
+    --pitch-dark: #0B3D2E;
+    --pitch: #1F7A4D;
+    --pitch-light: #2FA968;
+    --scoreboard: #FFB627;
+    --chalk: #F7FAF7;
+    --ink: #0A1F1C;
+    --card-radius: 14px;
+}
+
+body {
+    background-color: var(--chalk);
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+}
+
+h1, h2, h3, h4, h5, .fw-bold {
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+/* ---------- Turf stripe texture (signature background) ---------- */
+.hero-section,
+.kickmaster-navbar,
+.stat-card {
+    background-image: repeating-linear-gradient(
+        115deg,
+        rgba(255,255,255,0.05) 0px,
+        rgba(255,255,255,0.05) 26px,
+        transparent 26px,
+        transparent 52px
+    );
+}
+
+/* ---------- Navbar: floodlight scoreboard bar ---------- */
+.kickmaster-navbar {
+    background-color: var(--pitch-dark);
+    background-blend-mode: overlay;
+    border-bottom: 3px solid var(--scoreboard);
+    box-shadow: 0 2px 14px rgba(11, 61, 46, 0.35);
+}
+
+.kickmaster-navbar .navbar-brand {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    font-size: 1.4rem;
+}
+
+.kickmaster-navbar .navbar-brand i {
+    color: var(--scoreboard);
+}
+
+/* ---------- Sidebar: dugout tunnel ---------- */
+.kickmaster-sidebar {
+    width: 240px;
+    min-height: calc(100vh - 56px);
+    background: #ffffff;
+    border-right: 1px solid #e2e2e2;
+}
+
+.kickmaster-sidebar .list-group-item {
+    border: none;
+    border-left: 4px solid transparent;
+    padding: 12px 20px;
+    color: #345;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: 0.18s ease;
+}
+
+.kickmaster-sidebar .list-group-item:hover {
+    background-color: #eef8f1;
+    border-left-color: var(--pitch-light);
+    color: var(--pitch-dark);
+    transform: translateX(2px);
+}
+
+.kickmaster-sidebar .list-group-item.active {
+    background-color: var(--pitch-dark);
+    border-left-color: var(--scoreboard);
+    color: #fff;
+    font-weight: 600;
+}
+
+.sidebar-heading {
+    padding: 14px 20px 6px;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #999;
+    font-weight: 700;
+}
+
+.kickmaster-main {
+    background: var(--chalk);
+}
+
+/* ---------- Hero section ---------- */
+.hero-section {
+    background-color: var(--pitch-dark);
+    background-blend-mode: soft-light;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section h1 {
+    font-size: 2.6rem;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(255,182,39,0.18), transparent 55%);
+    pointer-events: none;
+}
+
+/* ---------- Cards: base lift + entrance animation ---------- */
+.card {
+    border: none;
+    border-radius: var(--card-radius);
+    box-shadow: 0 2px 10px rgba(10, 31, 28, 0.08);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    animation: fadeInUp 0.45s ease both;
+}
+
+.card:nth-child(2) { animation-delay: 0.05s; }
+.card:nth-child(3) { animation-delay: 0.10s; }
+.card:nth-child(4) { animation-delay: 0.15s; }
+.card:nth-child(5) { animation-delay: 0.20s; }
+.card:nth-child(6) { animation-delay: 0.25s; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.team-card:hover, .match-card:hover, .fixture-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 28px rgba(11, 61, 46, 0.18);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px) scale(1.02);
+}
+
+/* ---------- Dashboard stat cards ---------- */
+.stat-card {
+    border-radius: var(--card-radius);
+}
+
+.stat-card h3 {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 2.1rem;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.stat-mini {
+    border-radius: 10px;
+    background: #fff;
+    border-top: 3px solid var(--pitch);
+}
+
+.stat-mini h4 {
+    font-family: 'Roboto Mono', monospace;
+    text-transform: none;
+    color: var(--pitch-dark);
+}
+
+/* ---------- Match cards: scoreboard signature ---------- */
+.match-card .card-body {
+    background: linear-gradient(180deg, #ffffff 0%, #fbfdfc 100%);
+    border-radius: var(--card-radius);
+}
+
+.match-card .fs-4.fw-bold,
+#scoreDisplay {
+    font-family: 'Roboto Mono', monospace;
+    background: var(--ink);
+    color: var(--scoreboard);
+    padding: 4px 14px;
+    border-radius: 6px;
+    display: inline-block;
+    letter-spacing: 0.05em;
+    box-shadow: inset 0 0 0 2px rgba(255,182,39,0.25);
+}
+
+/* ---------- Team / player imagery ---------- */
+.team-logo, .team-logo-lg {
+    background: #fff;
+    padding: 6px;
+    box-shadow: 0 0 0 3px var(--chalk), 0 0 0 5px var(--pitch);
+}
+
+.team-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.team-logo-lg {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.player-avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--pitch-light);
+}
+
+.player-avatar-lg {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--pitch-light);
+}
+
+/* ---------- Live badge: floodlight pulse ---------- */
+.live-badge {
+    background-color: #E63946 !important;
+    animation: floodlightPulse 1.4s infinite;
+    letter-spacing: 0.08em;
+}
+
+@keyframes floodlightPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.55); }
+    70%  { box-shadow: 0 0 0 8px rgba(230, 57, 70, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
+}
+
+/* ---------- Buttons: kit-number treatment on primary actions ---------- */
+.btn-primary {
+    background-color: var(--pitch);
+    border-color: var(--pitch);
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--pitch-dark);
+    border-color: var(--pitch-dark);
+}
+
+.btn-warning {
+    background-color: var(--scoreboard);
+    border-color: var(--scoreboard);
+    color: var(--ink);
+    font-weight: 600;
+}
+
+/* ---------- Tables ---------- */
+.table thead {
+    background-color: var(--pitch-dark);
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #eef8f1;
+}
+
+/* ---------- Auth cards ---------- */
+.auth-card {
+    border-radius: 18px;
+    margin-top: 40px;
+    border-top: 5px solid var(--pitch);
+}
+
+/* ---------- Footer ---------- */
+.kickmaster-footer {
+    background: var(--pitch-dark);
+    color: #cfe8da;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.03em;
+}
+
+/* ---------- Navbar live search dropdown ---------- */
+.search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(10, 31, 28, 0.22);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
+}
+
+.search-dropdown.show {
+    display: block;
+    animation: fadeInUp 0.2s ease both;
+}
+
+.search-dropdown a {
+    display: block;
+    padding: 9px 14px;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.92rem;
+}
+
+.search-dropdown a:hover {
+    background: #eef8f1;
+    color: var(--pitch-dark);
+}
+
+/* ---------- Badges ---------- */
+.badge.bg-info {
+    background-color: var(--pitch) !important;
+}
+
+.badge.bg-warning {
+    color: var(--ink) !important;
+}
+
+/* ---------- Alerts ---------- */
+.alert-success {
+    background-color: #e6f6ec;
+    border-left: 4px solid var(--pitch);
+    color: var(--pitch-dark);
+}
+
+/* ---------- Reduced motion respect ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .card, .search-dropdown.show, .live-badge {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 767px) {
+    .kickmaster-sidebar {
+        display: none;
+    }
+    .hero-section h1 {
+        font-size: 1.9rem;
+    }
+}
