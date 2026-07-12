@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,8 @@ Route::middleware('auth')->group(function () {
     // Team dekha (view only for normal user)
     Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
     Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
+    Route::get('/players', [PlayerController::class, 'index'])->name('players.index');
+    Route::get('/players/{player}', [PlayerController::class, 'show'])->name('players.show');
 });
 
 // ============== ADMIN ONLY ROUTES ==============
@@ -46,4 +49,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/teams/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
     Route::put('/teams/{team}', [TeamController::class, 'update'])->name('teams.update');
     Route::delete('/teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
+
+    // Player CRUD
+    Route::get('/players/create', [PlayerController::class, 'create'])->name('players.create');
+    Route::post('/players', [PlayerController::class, 'store'])->name('players.store');
+    Route::get('/players/{player}/edit', [PlayerController::class, 'edit'])->name('players.edit');
+    Route::put('/players/{player}', [PlayerController::class, 'update'])->name('players.update');
+    Route::delete('/players/{player}', [PlayerController::class, 'destroy'])->name('players.destroy');
 });

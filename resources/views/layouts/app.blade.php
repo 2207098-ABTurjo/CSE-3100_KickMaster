@@ -57,6 +57,9 @@
                 <a href="{{ route('teams.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('teams.*') ? 'active' : '' }}">
                     <i class="bi bi-shield"></i> Teams
                 </a>
+                <a href="{{ route('players.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('players.*') ? 'active' : '' }}">
+                    <i class="bi bi-people"></i> Players
+                </a>
             </div>
         </nav>
 
