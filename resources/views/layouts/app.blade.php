@@ -60,6 +60,9 @@
                 <a href="{{ route('players.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('players.*') ? 'active' : '' }}">
                     <i class="bi bi-people"></i> Players
                 </a>
+                <a href="{{ route('fixtures.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('fixtures.*') ? 'active' : '' }}">
+                    <i class="bi bi-calendar-event"></i> Fixtures
+                </a>
             </div>
         </nav>
 

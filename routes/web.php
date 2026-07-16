@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FixtureController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 | route gula ke group kora hoyeche.
 */
 
-// Home route - shobar jonno accessible
-Route::view('/', 'welcome')->name('home');
+// Home route - shobar jonno accessible, fixtures dekhabe
+Route::get('/', [FixtureController::class, 'home'])->name('home');
 
 // ============== GUEST ROUTES (jara login kore nai) ==============
 Route::middleware('guest')->group(function () {
@@ -39,6 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
     Route::get('/players', [PlayerController::class, 'index'])->name('players.index');
     Route::get('/players/{player}', [PlayerController::class, 'show'])->name('players.show');
+
+    // Fixtures dekha
+    Route::get('/fixtures', [FixtureController::class, 'index'])->name('fixtures.index');
+    Route::get('/fixtures/{fixture}', [FixtureController::class, 'show'])->name('fixtures.show');
 });
 
 // ============== ADMIN ONLY ROUTES ==============
@@ -56,4 +61,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/players/{player}/edit', [PlayerController::class, 'edit'])->name('players.edit');
     Route::put('/players/{player}', [PlayerController::class, 'update'])->name('players.update');
     Route::delete('/players/{player}', [PlayerController::class, 'destroy'])->name('players.destroy');
+
+    // Fixture CRUD
+    Route::get('/fixtures/create', [FixtureController::class, 'create'])->name('fixtures.create');
+    Route::post('/fixtures', [FixtureController::class, 'store'])->name('fixtures.store');
+    Route::get('/fixtures/{fixture}/edit', [FixtureController::class, 'edit'])->name('fixtures.edit');
+    Route::put('/fixtures/{fixture}', [FixtureController::class, 'update'])->name('fixtures.update');
+    Route::delete('/fixtures/{fixture}', [FixtureController::class, 'destroy'])->name('fixtures.destroy');
 });
