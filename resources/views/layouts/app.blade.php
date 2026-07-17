@@ -63,6 +63,9 @@
                 <a href="{{ route('fixtures.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('fixtures.*') ? 'active' : '' }}">
                     <i class="bi bi-calendar-event"></i> Fixtures
                 </a>
+                <a href="{{ route('matches.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('matches.*') ? 'active' : '' }}">
+                    <i class="bi bi-broadcast"></i> Matches / Live Score
+                </a>
             </div>
         </nav>
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 // Ei model ekta specific match er statistics store kore (dui team er data ekshathe)
 class MatchStatistic extends Model
@@ -24,4 +25,9 @@ class MatchStatistic extends Model
         'home_red_cards',
         'away_red_cards',
     ];
+
+    public function match(): BelongsTo
+    {
+        return $this->belongsTo(GameMatch::class, 'match_id');
+    }
 }

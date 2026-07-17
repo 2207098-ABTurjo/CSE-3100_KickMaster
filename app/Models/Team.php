@@ -23,4 +23,16 @@ class Team extends Model
     {
         return $this->hasMany(Player::class);
     }
+
+    // Team ta home hisebe kotogula match kheleche
+    public function homeMatches(): HasMany
+    {
+        return $this->hasMany(GameMatch::class, 'home_team_id');
+    }
+
+    // Team ta away hisebe kotogula match kheleche
+    public function awayMatches(): HasMany
+    {
+        return $this->hasMany(GameMatch::class, 'away_team_id');
+    }
 }

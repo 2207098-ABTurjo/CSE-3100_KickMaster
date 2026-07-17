@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FixtureController;
+use App\Http\Controllers\GameMatchController;
+use App\Http\Controllers\MatchStatisticController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +46,10 @@ Route::middleware('auth')->group(function () {
     // Fixtures dekha
     Route::get('/fixtures', [FixtureController::class, 'index'])->name('fixtures.index');
     Route::get('/fixtures/{fixture}', [FixtureController::class, 'show'])->name('fixtures.show');
+
+    // Match details ar live score dekha
+    Route::get('/matches', [GameMatchController::class, 'index'])->name('matches.index');
+    Route::get('/matches/{match}', [GameMatchController::class, 'show'])->name('matches.show');
 });
 
 // ============== ADMIN ONLY ROUTES ==============
@@ -68,4 +74,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/fixtures/{fixture}/edit', [FixtureController::class, 'edit'])->name('fixtures.edit');
     Route::put('/fixtures/{fixture}', [FixtureController::class, 'update'])->name('fixtures.update');
     Route::delete('/fixtures/{fixture}', [FixtureController::class, 'destroy'])->name('fixtures.destroy');
+
+    // Match CRUD + score/stat update
+    Route::get('/matches/create', [GameMatchController::class, 'create'])->name('matches.create');
+    Route::post('/matches', [GameMatchController::class, 'store'])->name('matches.store');
+    Route::get('/matches/{match}/edit', [GameMatchController::class, 'edit'])->name('matches.edit');
+    Route::put('/matches/{match}', [GameMatchController::class, 'update'])->name('matches.update');
+    Route::delete('/matches/{match}', [GameMatchController::class, 'destroy'])->name('matches.destroy');
+    Route::post('/matches/{match}/score', [GameMatchController::class, 'updateScore'])->name('matches.updateScore');
+
+    // Match statistics update
+    Route::get('/matches/{match}/statistics', [MatchStatisticController::class, 'edit'])->name('matches.statistics.edit');
+    Route::put('/matches/{match}/statistics', [MatchStatisticController::class, 'update'])->name('matches.statistics.update');
 });
