@@ -27,6 +27,11 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navMenu">
+                {{-- Simple AJAX search box, JS file e handle kora hoyeche --}}
+                <form class="d-flex mx-auto position-relative" style="max-width:400px;width:100%;">
+                    <input type="text" id="navSearchInput" class="form-control" placeholder="Search team, player, match...">
+                    <div id="navSearchResults" class="search-dropdown"></div>
+                </form>
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item">
                         <span class="nav-link">
@@ -54,18 +59,25 @@
                 <a href="{{ route('dashboard') }}" class="list-group-item list-group-item-action {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <i class="bi bi-speedometer2"></i> Dashboard
                 </a>
-                <a href="{{ route('teams.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('teams.*') ? 'active' : '' }}">
-                    <i class="bi bi-shield"></i> Teams
-                </a>
-                <a href="{{ route('players.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('players.*') ? 'active' : '' }}">
-                    <i class="bi bi-people"></i> Players
-                </a>
                 <a href="{{ route('fixtures.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('fixtures.*') ? 'active' : '' }}">
                     <i class="bi bi-calendar-event"></i> Fixtures
                 </a>
                 <a href="{{ route('matches.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('matches.*') ? 'active' : '' }}">
                     <i class="bi bi-broadcast"></i> Matches / Live Score
                 </a>
+                <a href="{{ route('teams.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('teams.*') ? 'active' : '' }}">
+                    <i class="bi bi-shield"></i> Teams
+                </a>
+                <a href="{{ route('players.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('players.*') ? 'active' : '' }}">
+                    <i class="bi bi-people"></i> Players
+                </a>
+
+                @if(auth()->user()->isAdmin())
+                    <div class="sidebar-heading">Admin Panel</div>
+                    <a href="{{ route('admin.users.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                        <i class="bi bi-person-gear"></i> Manage Users
+                    </a>
+                @endif
             </div>
         </nav>
 
@@ -107,7 +119,7 @@
 @endauth
 
 <footer class="text-center py-3 kickmaster-footer">
-    <small>&copy; {{ date('Y') }} KickMaster - Web Programming Lab Project</small>
+    <small>&copy; {{ date('Y') }} KickMaster </small>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

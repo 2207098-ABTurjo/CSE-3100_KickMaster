@@ -7,7 +7,9 @@ use App\Http\Controllers\FixtureController;
 use App\Http\Controllers\GameMatchController;
 use App\Http\Controllers\MatchStatisticController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,12 +39,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Team dekha (view only for normal user)
-    Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
-    Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
-    Route::get('/players', [PlayerController::class, 'index'])->name('players.index');
-    Route::get('/players/{player}', [PlayerController::class, 'show'])->name('players.show');
-
     // Fixtures dekha
     Route::get('/fixtures', [FixtureController::class, 'index'])->name('fixtures.index');
     Route::get('/fixtures/{fixture}', [FixtureController::class, 'show'])->name('fixtures.show');
@@ -50,6 +46,15 @@ Route::middleware('auth')->group(function () {
     // Match details ar live score dekha
     Route::get('/matches', [GameMatchController::class, 'index'])->name('matches.index');
     Route::get('/matches/{match}', [GameMatchController::class, 'show'])->name('matches.show');
+
+    // Team ar player dekha (view only for normal user)
+    Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
+    Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
+    Route::get('/players', [PlayerController::class, 'index'])->name('players.index');
+    Route::get('/players/{player}', [PlayerController::class, 'show'])->name('players.show');
+
+    // Search & filter - AJAX diye kaj kore
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
 });
 
 // ============== ADMIN ONLY ROUTES ==============
@@ -86,4 +91,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Match statistics update
     Route::get('/matches/{match}/statistics', [MatchStatisticController::class, 'edit'])->name('matches.statistics.edit');
     Route::put('/matches/{match}/statistics', [MatchStatisticController::class, 'update'])->name('matches.statistics.update');
+
+    // User management
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 });
